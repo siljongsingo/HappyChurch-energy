@@ -259,7 +259,7 @@ function MTable({ year, data, c1, c2, lbs, mob, type }) {
               const isLatest = mi + 1 === lm && partial;
               return (
                 <tr key={mi} style={{ borderBottom: "0.5px solid var(--color-border-tertiary)" }}>
-                  <td style={{ padding: mob ? "4px 5px" : "5px 7px", fontWeight: 700, fontSize: mob ? 11 : 12 }}>{m}</td>
+                  <td style={{ padding: mob ? "4px 5px" : "5px 7px", fontWeight: 700, fontSize: mob ? 11 : 12, textAlign: "center" }}>{m}</td>
                   {v1.map((v, i) => (<td key={i} style={{ padding: mob ? "4px 5px" : "5px 7px", textAlign: "right", color: c1.tc, background: c1.cb, fontWeight: isLatest ? 700 : (i === v1.length - 1 ? 500 : 400), borderLeft: i === 0 ? "2px solid " + c1.bd : "none", fontSize: mob ? 10 : 11 }}>{v ? fmt(v) : "-"}</td>))}
                   {v2.map((v, i) => (<td key={i} style={{ padding: mob ? "4px 5px" : "5px 7px", textAlign: "right", color: c2.tc, background: c2.cb, fontWeight: isLatest ? 700 : (i === v2.length - 1 ? 500 : 400), borderLeft: i === 0 ? "2px solid " + c2.bd : "none", fontSize: mob ? 10 : 11 }}>{v ? fmt(v) : "-"}</td>))}
                   <td style={{ padding: mob ? "4px 5px" : "5px 7px", textAlign: "right", fontWeight: isLatest ? 700 : 500, borderLeft: "1px solid var(--color-border-secondary)", fontSize: mob ? 10 : 11 }}>{tot > 0 ? fmt(tot) : "-"}</td>
@@ -351,7 +351,7 @@ function TabMain({ data, selYear, prevYear, allYears, mob, lmAll, upTo, isPartia
                 const c = pct(tot, ptot);
                 return (
                   <tr key={i} style={{ borderBottom: "0.5px solid var(--color-border-tertiary)" }}>
-                    <td style={{ padding: "5px 7px", fontWeight: 700, fontSize: 12 }}>{m}</td>
+                    <td style={{ padding: "5px 7px", fontWeight: 700, fontSize: 12, textAlign: "center" }}>{m}</td>
                     <td style={{ padding: "5px 7px", textAlign: "right", background: "#F0F6FD", borderLeft: "2px solid #378ADD" }}>{ec ? fmt(ec) : "-"}</td>
                     <td style={{ padding: "5px 7px", textAlign: "right", background: "#F4FCF8", borderLeft: "2px solid #1D9E75" }}>{gc ? fmt(gc) : "-"}</td>
                     <td style={{ padding: "5px 7px", textAlign: "right", fontWeight: 500, borderLeft: "1px solid var(--color-border-secondary)" }}>{tot ? fmt(tot) : "-"}</td>
@@ -506,7 +506,7 @@ function TabCompare({ data, allYears, mob }) {
                 <tbody>
                   {trows.map((row, mi) => (
                     <tr key={mi} style={{ borderBottom:"0.5px solid var(--color-border-tertiary)", opacity:allYears.some(y=>row[y])?1:0.4 }}>
-                      <td style={{ padding:mob?"4px 5px":"5px 7px", fontWeight:700, fontSize:mob?11:12 }}>{row.name}</td>
+                      <td style={{ padding:mob?"4px 5px":"5px 7px", fontWeight:700, fontSize:mob?11:12, textAlign:"center" }}>{row.name}</td>
                       {allYears.map((y, yi) => {
                         const val = row[y];
                         const pval = yi>0?trows[mi][allYears[yi-1]]:null;
