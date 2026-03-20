@@ -12,7 +12,7 @@ function useWinW() {
   return w;
 }
 
-const MLABELS = ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"];
+const MLABELS = ["1","2","3","4","5","6","7","8","9","10","11","12"];
 const SKEY = "church_energy_v11";
 const YCOL = { "2023":"#378ADD","2024":"#1D9E75","2025":"#E24B4A","2026":"#BA7517","2027":"#7F77DD" };
 
@@ -104,9 +104,7 @@ function Badge({ val, prev }) {
   const c = pct(val, prev);
   if (c == null) return null;
   return (
-    <span style={{ fontSize: 11, padding: "2px 7px", borderRadius: 4,
-      background: c > 0 ? "#FCEBEB" : "#EAF3DE",
-      color: c > 0 ? "#A32D2D" : "#3B6D11", fontWeight: 500 }}>
+    <span style={{ fontSize: 11, padding: "2px 7px", borderRadius: 4, background: c > 0 ? "#FCEBEB" : "#EAF3DE", color: c > 0 ? "#A32D2D" : "#3B6D11", fontWeight: 500 }}>
       {fmtP(c)}
     </span>
   );
@@ -114,8 +112,7 @@ function Badge({ val, prev }) {
 
 function Card({ label, val, prev, unit, accent, mob, py }) {
   return (
-    <div style={{ background: "var(--color-background-secondary)", borderRadius: 10,
-      padding: mob ? "0.75rem" : "1rem", borderLeft: accent ? "3px solid " + accent : "none" }}>
+    <div style={{ background: "var(--color-background-secondary)", borderRadius: 10, padding: mob ? "0.75rem" : "1rem", borderLeft: accent ? "3px solid " + accent : "none" }}>
       <div style={{ fontSize: 11, color: "var(--color-text-secondary)", marginBottom: 5 }}>{label}</div>
       <div style={{ fontSize: mob ? 15 : 17, fontWeight: 500, marginBottom: 5 }}>
         {fmt(val)}<span style={{ fontSize: 10, marginLeft: 3, color: "var(--color-text-tertiary)" }}>{unit}</span>
@@ -130,18 +127,12 @@ function Card({ label, val, prev, unit, accent, mob, py }) {
 
 function BarChart2({ title, rows, mob, cy, py, cc }) {
   return (
-    <div style={{ background: "var(--color-background-primary)", border: "0.5px solid var(--color-border-tertiary)",
-      borderRadius: 12, padding: mob ? "0.875rem" : "1.25rem", marginBottom: "0.875rem" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center",
-        marginBottom: "0.75rem", flexWrap: "wrap", gap: 6 }}>
+    <div style={{ background: "var(--color-background-primary)", border: "0.5px solid var(--color-border-tertiary)", borderRadius: 12, padding: mob ? "0.875rem" : "1.25rem", marginBottom: "0.875rem" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.75rem", flexWrap: "wrap", gap: 6 }}>
         <div style={{ fontSize: mob ? 12 : 14, fontWeight: 500 }}>{title}</div>
         <div style={{ display: "flex", gap: 12 }}>
-          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "var(--color-text-secondary)" }}>
-            <span style={{ width: 10, height: 10, borderRadius: 2, background: cc, display: "inline-block" }} />{cy}년
-          </span>
-          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "var(--color-text-secondary)" }}>
-            <span style={{ width: 10, height: 10, borderRadius: 2, background: "#D3D1C7", display: "inline-block" }} />{py}년
-          </span>
+          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "var(--color-text-secondary)" }}><span style={{ width: 10, height: 10, borderRadius: 2, background: cc, display: "inline-block" }} />{cy}년</span>
+          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "var(--color-text-secondary)" }}><span style={{ width: 10, height: 10, borderRadius: 2, background: "#D3D1C7", display: "inline-block" }} />{py}년</span>
         </div>
       </div>
       <div style={{ height: mob ? 160 : 230 }}>
@@ -150,8 +141,7 @@ function BarChart2({ title, rows, mob, cy, py, cc }) {
             <CartesianGrid strokeDasharray="3 3" stroke="#e5e5e5" vertical={false} />
             <XAxis dataKey="name" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
             <YAxis tick={{ fontSize: 9 }} tickFormatter={fmtW} axisLine={false} tickLine={false} width={40} />
-            <Tooltip formatter={(v, n) => [Number(v).toLocaleString("ko-KR") + "원", n === "curr" ? cy + "년" : py + "년"]}
-              contentStyle={{ fontSize: 11, borderRadius: 6 }} />
+            <Tooltip formatter={(v, n) => [Number(v).toLocaleString("ko-KR") + "원", n === "curr" ? cy + "년" : py + "년"]} contentStyle={{ fontSize: 11, borderRadius: 6 }} />
             <Bar dataKey="curr" fill={cc} radius={[2, 2, 0, 0]} name={cy + "년"} />
             <Bar dataKey="prev" fill="#D3D1C7" radius={[2, 2, 0, 0]} name={py + "년"} />
           </BarChart>
@@ -164,16 +154,12 @@ function BarChart2({ title, rows, mob, cy, py, cc }) {
 function YearLine({ title, rows, years, mob, unit }) {
   const active = years.filter((y) => rows.some((r) => r[y] != null));
   return (
-    <div style={{ background: "var(--color-background-primary)", border: "0.5px solid var(--color-border-tertiary)",
-      borderRadius: 12, padding: mob ? "0.875rem" : "1.25rem", marginBottom: "0.875rem" }}>
+    <div style={{ background: "var(--color-background-primary)", border: "0.5px solid var(--color-border-tertiary)", borderRadius: 12, padding: mob ? "0.875rem" : "1.25rem", marginBottom: "0.875rem" }}>
       <div style={{ fontSize: mob ? 12 : 14, fontWeight: 500, marginBottom: "0.5rem" }}>{title}</div>
       <div style={{ display: "flex", gap: mob ? 8 : 14, flexWrap: "wrap", marginBottom: "0.75rem" }}>
         {active.map((y) => (
           <span key={y} style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "var(--color-text-secondary)" }}>
-            <svg width="20" height="8" viewBox="0 0 20 8">
-              <line x1="0" y1="4" x2="20" y2="4" stroke={YCOL[y] || "#888"} strokeWidth="2" />
-              <circle cx="10" cy="4" r="2" fill={YCOL[y] || "#888"} />
-            </svg>
+            <svg width="20" height="8" viewBox="0 0 20 8"><line x1="0" y1="4" x2="20" y2="4" stroke={YCOL[y] || "#888"} strokeWidth="2" /><circle cx="10" cy="4" r="2" fill={YCOL[y] || "#888"} /></svg>
             {y}년
           </span>
         ))}
@@ -184,11 +170,9 @@ function YearLine({ title, rows, years, mob, unit }) {
             <CartesianGrid strokeDasharray="3 3" stroke="#e5e5e5" vertical={false} />
             <XAxis dataKey="name" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
             <YAxis tick={{ fontSize: 9 }} tickFormatter={fmtW} axisLine={false} tickLine={false} width={40} />
-            <Tooltip formatter={(v, n) => [Number(v).toLocaleString("ko-KR") + unit, n + "년"]}
-              contentStyle={{ fontSize: 11, borderRadius: 6 }} itemSorter={(i) => -(i.value || 0)} />
+            <Tooltip formatter={(v, n) => [Number(v).toLocaleString("ko-KR") + unit, n + "년"]} contentStyle={{ fontSize: 11, borderRadius: 6 }} itemSorter={(i) => -(i.value || 0)} />
             {active.map((y) => (
-              <Line key={y} type="monotone" dataKey={y} stroke={YCOL[y] || "#888"}
-                strokeWidth={2} dot={{ r: 2, fill: YCOL[y] || "#888" }} activeDot={{ r: 4 }} connectNulls name={y} />
+              <Line key={y} type="monotone" dataKey={y} stroke={YCOL[y] || "#888"} strokeWidth={2} dot={{ r: 2, fill: YCOL[y] || "#888" }} activeDot={{ r: 4 }} connectNulls name={y} />
             ))}
           </LineChart>
         </ResponsiveContainer>
@@ -199,29 +183,18 @@ function YearLine({ title, rows, years, mob, unit }) {
 
 function UsageLine({ title, rows, mob, cy, py, unit, cc, pc, l1, l2, clicked, onSet, onClear }) {
   return (
-    <div style={{ background: "var(--color-background-primary)", border: "0.5px solid var(--color-border-tertiary)",
-      borderRadius: 12, padding: mob ? "0.875rem" : "1.25rem", marginBottom: "0.875rem" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center",
-        marginBottom: "0.5rem", flexWrap: "wrap", gap: 6 }}>
+    <div style={{ background: "var(--color-background-primary)", border: "0.5px solid var(--color-border-tertiary)", borderRadius: 12, padding: mob ? "0.875rem" : "1.25rem", marginBottom: "0.875rem" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem", flexWrap: "wrap", gap: 6 }}>
         <div style={{ fontSize: mob ? 12 : 14, fontWeight: 500 }}>{title}</div>
         <div style={{ display: "flex", gap: 12 }}>
-          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "var(--color-text-secondary)" }}>
-            <svg width="20" height="8" viewBox="0 0 20 8"><line x1="0" y1="4" x2="20" y2="4" stroke={cc} strokeWidth="2.5" /></svg>
-            {cy}년
-          </span>
-          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "var(--color-text-secondary)" }}>
-            <svg width="20" height="8" viewBox="0 0 20 8"><line x1="0" y1="4" x2="20" y2="4" stroke={pc} strokeWidth="2" strokeDasharray="4 2" /></svg>
-            {py}년
-          </span>
+          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "var(--color-text-secondary)" }}><svg width="20" height="8" viewBox="0 0 20 8"><line x1="0" y1="4" x2="20" y2="4" stroke={cc} strokeWidth="2.5" /></svg>{cy}년</span>
+          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 11, color: "var(--color-text-secondary)" }}><svg width="20" height="8" viewBox="0 0 20 8"><line x1="0" y1="4" x2="20" y2="4" stroke={pc} strokeWidth="2" strokeDasharray="4 2" /></svg>{py}년</span>
         </div>
       </div>
       {clicked && (
-        <div style={{ marginBottom: "0.75rem", padding: "8px 12px", background: "var(--color-background-secondary)",
-          borderRadius: 8, fontSize: 12, display: "flex", gap: 14, flexWrap: "wrap", alignItems: "center" }}>
-          <span style={{ fontWeight: 500 }}>{clicked.name} 사용량</span>
-          <span style={{ color: cc }}>{cy}년: <strong>{(clicked.curr || 0).toLocaleString("ko-KR")} {unit}</strong>
-            {l1 && <span style={{ fontSize: 10, color: "var(--color-text-tertiary)", marginLeft: 4 }}>({l1} {(clicked.a || 0).toLocaleString()} + {l2} {(clicked.b || 0).toLocaleString()})</span>}
-          </span>
+        <div style={{ marginBottom: "0.75rem", padding: "8px 12px", background: "var(--color-background-secondary)", borderRadius: 8, fontSize: 12, display: "flex", gap: 14, flexWrap: "wrap", alignItems: "center" }}>
+          <span style={{ fontWeight: 500 }}>{clicked.name}월 사용량</span>
+          <span style={{ color: cc }}>{cy}년: <strong>{(clicked.curr || 0).toLocaleString("ko-KR")} {unit}</strong>{l1 && <span style={{ fontSize: 10, color: "var(--color-text-tertiary)", marginLeft: 4 }}>({l1} {(clicked.a || 0).toLocaleString()} + {l2} {(clicked.b || 0).toLocaleString()})</span>}</span>
           <span style={{ color: pc }}>{py}년: <strong>{(clicked.prev || 0).toLocaleString("ko-KR")} {unit}</strong></span>
           <button onClick={onClear} style={{ marginLeft: "auto", fontSize: 11, color: "var(--color-text-tertiary)", background: "none", border: "none", cursor: "pointer" }}>x</button>
         </div>
@@ -232,8 +205,7 @@ function UsageLine({ title, rows, mob, cy, py, unit, cc, pc, l1, l2, clicked, on
             <CartesianGrid strokeDasharray="3 3" stroke="#e5e5e5" vertical={false} />
             <XAxis dataKey="name" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
             <YAxis tick={{ fontSize: 9 }} axisLine={false} tickLine={false} width={36} />
-            <Tooltip formatter={(v, n) => [Number(v).toLocaleString("ko-KR") + unit, n === "curr" ? cy + "년" : py + "년"]}
-              contentStyle={{ fontSize: 11, borderRadius: 6 }} />
+            <Tooltip formatter={(v, n) => [Number(v).toLocaleString("ko-KR") + unit, n === "curr" ? cy + "년" : py + "년"]} contentStyle={{ fontSize: 11, borderRadius: 6 }} />
             <Line type="monotone" dataKey="curr" stroke={cc} strokeWidth={2.5} dot={{ r: 3 }} activeDot={{ r: 5 }} connectNulls name="curr" />
             <Line type="monotone" dataKey="prev" stroke={pc} strokeWidth={2} strokeDasharray="5 3" dot={false} activeDot={{ r: 4 }} connectNulls name="prev" />
           </LineChart>
@@ -248,28 +220,18 @@ function MTable({ year, data, c1, c2, lbs, mob, type }) {
   const partial = lm > 0 && lm < 12;
   const upTo = lm || 12;
   const isGas = type === "gas";
-
-  // 모바일 가스탭: 열량(heat) 컬럼 제외
   const c1fs = mob && isGas ? c1.fs.filter(f => !f.includes("heat")) : c1.fs;
   const c1sl = mob && isGas ? c1.sl.filter((_, i) => !c1.fs[i].includes("heat")) : c1.sl;
   const c2fs = mob && isGas ? c2.fs.filter(f => !f.includes("heat")) : c2.fs;
   const c2sl = mob && isGas ? c2.sl.filter((_, i) => !c2.fs[i].includes("heat")) : c2.sl;
-
   const s1 = c1fs.reduce((s, f) => s + sumTo(data, year, f, upTo), 0);
   const s2 = c2fs.reduce((s, f) => s + sumTo(data, year, f, upTo), 0);
-
-  // 헤더 라벨 2줄 처리 (모바일)
   const lb0 = mob ? lbs[0].replace(" (", "\n(") : lbs[0];
   const lb1 = mob ? lbs[1].replace(" (", "\n(") : lbs[1];
-
-  // 합계 라벨 2줄 처리 (모바일)
-  const sumLabel = partial
-    ? (mob ? `1~${lm}월\n합계` : `1~${lm}월 합계`)
-    : (mob ? "연간\n합계" : "연간 합계");
+  const sumLabel = partial ? (mob ? `1~${lm}\n합계` : `1~${lm}월 합계`) : (mob ? "연간\n합계" : "연간 합계");
 
   return (
-    <div style={{ background: "var(--color-background-primary)", border: "0.5px solid var(--color-border-tertiary)",
-      borderRadius: 12, padding: mob ? "0.875rem" : "1.25rem", marginBottom: "0.875rem" }}>
+    <div style={{ background: "var(--color-background-primary)", border: "0.5px solid var(--color-border-tertiary)", borderRadius: 12, padding: mob ? "0.875rem" : "1.25rem", marginBottom: "0.875rem" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.875rem" }}>
         <div style={{ fontSize: mob ? 12 : 14, fontWeight: 500 }}>{year}년 월별 상세</div>
         {mob && <div style={{ fontSize: 10, color: "var(--color-text-tertiary)" }}>가로 스크롤</div>}
@@ -279,12 +241,8 @@ function MTable({ year, data, c1, c2, lbs, mob, type }) {
           <thead>
             <tr>
               <th rowSpan={2} style={{ padding: mob ? "4px 5px" : "5px 7px", textAlign: "left", color: "var(--color-text-secondary)", fontWeight: 500, verticalAlign: "middle", borderBottom: "0.5px solid var(--color-border-secondary)", fontSize: mob ? 10 : 11 }}>월</th>
-              <th colSpan={c1fs.length} style={{ padding: mob ? "3px 4px" : "4px 7px", textAlign: "center", background: c1.bg, color: c1.tc, fontWeight: 500, fontSize: mob ? 9 : 11, borderLeft: "2px solid " + c1.bd, whiteSpace: "pre-line", lineHeight: 1.3 }}>
-                {lb0}
-              </th>
-              <th colSpan={c2fs.length} style={{ padding: mob ? "3px 4px" : "4px 7px", textAlign: "center", background: c2.bg, color: c2.tc, fontWeight: 500, fontSize: mob ? 9 : 11, borderLeft: "2px solid " + c2.bd, whiteSpace: "pre-line", lineHeight: 1.3 }}>
-                {lb1}
-              </th>
+              <th colSpan={c1fs.length} style={{ padding: mob ? "3px 4px" : "4px 7px", textAlign: "center", background: c1.bg, color: c1.tc, fontWeight: 500, fontSize: mob ? 9 : 11, borderLeft: "2px solid " + c1.bd, whiteSpace: "pre-line", lineHeight: 1.3 }}>{lb0}</th>
+              <th colSpan={c2fs.length} style={{ padding: mob ? "3px 4px" : "4px 7px", textAlign: "center", background: c2.bg, color: c2.tc, fontWeight: 500, fontSize: mob ? 9 : 11, borderLeft: "2px solid " + c2.bd, whiteSpace: "pre-line", lineHeight: 1.3 }}>{lb1}</th>
               <th rowSpan={2} style={{ padding: mob ? "4px 5px" : "5px 7px", textAlign: "right", fontWeight: 500, verticalAlign: "middle", borderLeft: "1px solid var(--color-border-secondary)", borderBottom: "0.5px solid var(--color-border-secondary)", fontSize: mob ? 10 : 11 }}>합계</th>
             </tr>
             <tr style={{ borderBottom: "0.5px solid var(--color-border-secondary)" }}>
@@ -301,7 +259,7 @@ function MTable({ year, data, c1, c2, lbs, mob, type }) {
               const isLatest = mi + 1 === lm && partial;
               return (
                 <tr key={mi} style={{ borderBottom: "0.5px solid var(--color-border-tertiary)" }}>
-                  <td style={{ padding: mob ? "4px 5px" : "5px 7px", fontWeight: isLatest ? 700 : 500, fontSize: mob ? 10 : 11 }}>{m}</td>
+                  <td style={{ padding: mob ? "4px 5px" : "5px 7px", fontWeight: 700, fontSize: mob ? 11 : 12 }}>{m}</td>
                   {v1.map((v, i) => (<td key={i} style={{ padding: mob ? "4px 5px" : "5px 7px", textAlign: "right", color: c1.tc, background: c1.cb, fontWeight: isLatest ? 700 : (i === v1.length - 1 ? 500 : 400), borderLeft: i === 0 ? "2px solid " + c1.bd : "none", fontSize: mob ? 10 : 11 }}>{v ? fmt(v) : "-"}</td>))}
                   {v2.map((v, i) => (<td key={i} style={{ padding: mob ? "4px 5px" : "5px 7px", textAlign: "right", color: c2.tc, background: c2.cb, fontWeight: isLatest ? 700 : (i === v2.length - 1 ? 500 : 400), borderLeft: i === 0 ? "2px solid " + c2.bd : "none", fontSize: mob ? 10 : 11 }}>{v ? fmt(v) : "-"}</td>))}
                   <td style={{ padding: mob ? "4px 5px" : "5px 7px", textAlign: "right", fontWeight: isLatest ? 700 : 500, borderLeft: "1px solid var(--color-border-secondary)", fontSize: mob ? 10 : 11 }}>{tot > 0 ? fmt(tot) : "-"}</td>
@@ -322,12 +280,12 @@ function MTable({ year, data, c1, c2, lbs, mob, type }) {
 }
 
 function TabMain({ data, selYear, prevYear, allYears, mob, lmAll, upTo, isPartial }) {
-  const cur = { eC: sumTo(data, selYear, "e1_cost", upTo) + sumTo(data, selYear, "e2_cost", upTo), gC: sumTo(data, selYear, "gas1_cost", upTo) + sumTo(data, selYear, "gas2_cost", upTo), eU: sumTo(data, selYear, "e1_usage", upTo) + sumTo(data, selYear, "e2_usage", upTo) };
-  const pre = { eC: sumTo(data, prevYear, "e1_cost", upTo) + sumTo(data, prevYear, "e2_cost", upTo), gC: sumTo(data, prevYear, "gas1_cost", upTo) + sumTo(data, prevYear, "gas2_cost", upTo), eU: sumTo(data, prevYear, "e1_usage", upTo) + sumTo(data, prevYear, "e2_usage", upTo) };
+  const cur = { eC: sumTo(data,selYear,"e1_cost",upTo)+sumTo(data,selYear,"e2_cost",upTo), gC: sumTo(data,selYear,"gas1_cost",upTo)+sumTo(data,selYear,"gas2_cost",upTo), eU: sumTo(data,selYear,"e1_usage",upTo)+sumTo(data,selYear,"e2_usage",upTo) };
+  const pre = { eC: sumTo(data,prevYear,"e1_cost",upTo)+sumTo(data,prevYear,"e2_cost",upTo), gC: sumTo(data,prevYear,"gas1_cost",upTo)+sumTo(data,prevYear,"gas2_cost",upTo), eU: sumTo(data,prevYear,"e1_usage",upTo)+sumTo(data,prevYear,"e2_usage",upTo) };
   const bdRows = MLABELS.map((m, i) => {
-    const d = data[mkey(selYear, i + 1)] || {};
-    const pd = data[mkey(prevYear, i + 1)] || {};
-    return { name: m, elecCurr: ((d.e1_cost || 0) + (d.e2_cost || 0)) || null, elecPrev: ((pd.e1_cost || 0) + (pd.e2_cost || 0)) || null, gasCurr: ((d.gas1_cost || 0) + (d.gas2_cost || 0)) || null, gasPrev: ((pd.gas1_cost || 0) + (pd.gas2_cost || 0)) || null };
+    const d = data[mkey(selYear, i+1)] || {};
+    const pd = data[mkey(prevYear, i+1)] || {};
+    return { name: m, elecCurr: ((d.e1_cost||0)+(d.e2_cost||0))||null, elecPrev: ((pd.e1_cost||0)+(pd.e2_cost||0))||null, gasCurr: ((d.gas1_cost||0)+(d.gas2_cost||0))||null, gasPrev: ((pd.gas1_cost||0)+(pd.gas2_cost||0))||null };
   });
   const sfx = isPartial ? " (1~" + upTo + "월)" : "";
   return (
@@ -335,24 +293,22 @@ function TabMain({ data, selYear, prevYear, allYears, mob, lmAll, upTo, isPartia
       <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr 1fr" : "repeat(4,minmax(0,1fr))", gap: 10, marginBottom: "1rem" }}>
         <div style={{ gridColumn: mob ? "1/3" : "auto", background: "var(--color-background-secondary)", borderRadius: 10, padding: mob ? "0.75rem" : "1rem", borderLeft: "3px solid #534AB7" }}>
           <div style={{ fontSize: 11, color: "var(--color-text-secondary)", marginBottom: 5 }}>{"총 에너지비용" + sfx}</div>
-          <div style={{ fontSize: mob ? 18 : 22, fontWeight: 500, marginBottom: 5 }}>{fmt(cur.eC + cur.gC)}<span style={{ fontSize: 10, marginLeft: 3, color: "var(--color-text-tertiary)" }}>원</span></div>
+          <div style={{ fontSize: mob ? 18 : 22, fontWeight: 500, marginBottom: 5 }}>{fmt(cur.eC+cur.gC)}<span style={{ fontSize: 10, marginLeft: 3, color: "var(--color-text-tertiary)" }}>원</span></div>
           <div style={{ display: "flex", alignItems: "center", gap: 5, flexWrap: "wrap" }}>
-            <span style={{ fontSize: 10, color: "var(--color-text-tertiary)" }}>{prevYear}년: {fmt(pre.eC + pre.gC)}원</span>
-            <Badge val={cur.eC + cur.gC} prev={pre.eC + pre.gC} />
+            <span style={{ fontSize: 10, color: "var(--color-text-tertiary)" }}>{prevYear}년: {fmt(pre.eC+pre.gC)}원</span>
+            <Badge val={cur.eC+cur.gC} prev={pre.eC+pre.gC} />
           </div>
         </div>
-        <Card label={"전기요금" + sfx} val={cur.eC} prev={pre.eC} unit="원" mob={mob} py={prevYear} />
-        <Card label={"가스요금" + sfx} val={cur.gC} prev={pre.gC} unit="원" mob={mob} py={prevYear} />
+        <Card label={"전기요금"+sfx} val={cur.eC} prev={pre.eC} unit="원" mob={mob} py={prevYear} />
+        <Card label={"가스요금"+sfx} val={cur.gC} prev={pre.gC} unit="원" mob={mob} py={prevYear} />
         <Card label="전기사용량" val={cur.eU} prev={pre.eU} unit="kWh" mob={mob} py={prevYear} />
       </div>
       <div style={{ background: "var(--color-background-primary)", border: "0.5px solid var(--color-border-tertiary)", borderRadius: 12, padding: mob ? "0.875rem" : "1.25rem", marginBottom: "0.875rem" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.75rem", flexWrap: "wrap", gap: 6 }}>
-          <div style={{ fontSize: mob ? 12 : 14, fontWeight: 500 }}>{"월별 에너지요금 현황 (" + selYear + "년 vs " + prevYear + "년)"}</div>
+          <div style={{ fontSize: mob ? 12 : 14, fontWeight: 500 }}>{"월별 에너지요금 현황 ("+selYear+"년 vs "+prevYear+"년)"}</div>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             {[["#378ADD","전기 "+selYear+"년"],["#B5D4F4","전기 "+prevYear+"년"],["#1D9E75","가스 "+selYear+"년"],["#9FE1CB","가스 "+prevYear+"년"]].map((item) => (
-              <span key={item[1]} style={{ display: "flex", alignItems: "center", gap: 3, fontSize: 10, color: "var(--color-text-secondary)" }}>
-                <span style={{ width: 9, height: 9, borderRadius: 2, background: item[0], display: "inline-block" }} />{item[1]}
-              </span>
+              <span key={item[1]} style={{ display: "flex", alignItems: "center", gap: 3, fontSize: 10, color: "var(--color-text-secondary)" }}><span style={{ width: 9, height: 9, borderRadius: 2, background: item[0], display: "inline-block" }} />{item[1]}</span>
             ))}
           </div>
         </div>
@@ -362,7 +318,7 @@ function TabMain({ data, selYear, prevYear, allYears, mob, lmAll, upTo, isPartia
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e5e5" vertical={false} />
               <XAxis dataKey="name" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fontSize: 9 }} tickFormatter={fmtW} axisLine={false} tickLine={false} width={42} />
-              <Tooltip formatter={(v, n) => [Number(v).toLocaleString("ko-KR") + "원", n]} contentStyle={{ fontSize: 11, borderRadius: 6 }} />
+              <Tooltip formatter={(v, n) => [Number(v).toLocaleString("ko-KR")+"원", n]} contentStyle={{ fontSize: 11, borderRadius: 6 }} />
               <Bar dataKey="elecCurr" fill="#378ADD" radius={[2,2,0,0]} name={"전기 "+selYear+"년"} />
               <Bar dataKey="elecPrev" fill="#B5D4F4" radius={[2,2,0,0]} name={"전기 "+prevYear+"년"} />
               <Bar dataKey="gasCurr" fill="#1D9E75" radius={[2,2,0,0]} name={"가스 "+selYear+"년"} />
@@ -371,7 +327,6 @@ function TabMain({ data, selYear, prevYear, allYears, mob, lmAll, upTo, isPartia
           </ResponsiveContainer>
         </div>
       </div>
-      {/* 통합현황 월별 테이블 - 전년합계 % 2줄 */}
       <div style={{ background: "var(--color-background-primary)", border: "0.5px solid var(--color-border-tertiary)", borderRadius: 12, padding: mob ? "0.875rem" : "1.25rem" }}>
         <div style={{ fontSize: mob ? 12 : 14, fontWeight: 500, marginBottom: "0.875rem" }}>{selYear}년 월별 통합 요금</div>
         <div style={{ overflowX: "auto" }}>
@@ -387,16 +342,16 @@ function TabMain({ data, selYear, prevYear, allYears, mob, lmAll, upTo, isPartia
             </thead>
             <tbody>
               {MLABELS.map((m, i) => {
-                const d = data[mkey(selYear, i + 1)] || {};
-                const pd = data[mkey(prevYear, i + 1)] || {};
-                const ec = (d.e1_cost || 0) + (d.e2_cost || 0);
-                const gc = (d.gas1_cost || 0) + (d.gas2_cost || 0);
-                const tot = ec + gc;
+                const d = data[mkey(selYear, i+1)] || {};
+                const pd = data[mkey(prevYear, i+1)] || {};
+                const ec = (d.e1_cost||0)+(d.e2_cost||0);
+                const gc = (d.gas1_cost||0)+(d.gas2_cost||0);
+                const tot = ec+gc;
                 const ptot = (pd.e1_cost||0)+(pd.e2_cost||0)+(pd.gas1_cost||0)+(pd.gas2_cost||0);
                 const c = pct(tot, ptot);
                 return (
                   <tr key={i} style={{ borderBottom: "0.5px solid var(--color-border-tertiary)" }}>
-                    <td style={{ padding: "5px 7px", fontWeight: 500 }}>{m}</td>
+                    <td style={{ padding: "5px 7px", fontWeight: 700, fontSize: 12 }}>{m}</td>
                     <td style={{ padding: "5px 7px", textAlign: "right", background: "#F0F6FD", borderLeft: "2px solid #378ADD" }}>{ec ? fmt(ec) : "-"}</td>
                     <td style={{ padding: "5px 7px", textAlign: "right", background: "#F4FCF8", borderLeft: "2px solid #1D9E75" }}>{gc ? fmt(gc) : "-"}</td>
                     <td style={{ padding: "5px 7px", textAlign: "right", fontWeight: 500, borderLeft: "1px solid var(--color-border-secondary)" }}>{tot ? fmt(tot) : "-"}</td>
@@ -421,7 +376,7 @@ function TabElec({ data, selYear, prevYear, mob, lmE, cliE, setCliE }) {
   const e2C = sumTo(data,selYear,"e2_cost",ut), pe2C = sumTo(data,prevYear,"e2_cost",ut);
   const e1U = sumTo(data,selYear,"e1_usage",ut), e2U = sumTo(data,selYear,"e2_usage",ut);
   const pe1U = sumTo(data,prevYear,"e1_usage",ut), pe2U = sumTo(data,prevYear,"e2_usage",ut);
-  const sfx = ut < 12 ? " (1~" + ut + "월)" : "";
+  const sfx = ut < 12 ? " (1~"+ut+"월)" : "";
   const barRows = MLABELS.map((m,i) => { const d=data[mkey(selYear,i+1)]||{}; const pd=data[mkey(prevYear,i+1)]||{}; return {name:m,curr:((d.e1_cost||0)+(d.e2_cost||0))||null,prev:((pd.e1_cost||0)+(pd.e2_cost||0))||null}; });
   const useRows = MLABELS.map((m,i) => { const d=data[mkey(selYear,i+1)]||{}; const pd=data[mkey(prevYear,i+1)]||{}; return {name:m,curr:((d.e1_usage||0)+(d.e2_usage||0))||null,prev:((pd.e1_usage||0)+(pd.e2_usage||0))||null,a:d.e1_usage||0,b:d.e2_usage||0}; });
   return (
@@ -448,7 +403,7 @@ function TabGas({ data, selYear, prevYear, mob, lmG, cliG, setCliG }) {
   const g2C = sumTo(data,selYear,"gas2_cost",ut), pg2C = sumTo(data,prevYear,"gas2_cost",ut);
   const g1U = sumTo(data,selYear,"gas1_usage",ut), g2U = sumTo(data,selYear,"gas2_usage",ut);
   const pg1U = sumTo(data,prevYear,"gas1_usage",ut), pg2U = sumTo(data,prevYear,"gas2_usage",ut);
-  const sfx = ut < 12 ? " (1~" + ut + "월)" : "";
+  const sfx = ut < 12 ? " (1~"+ut+"월)" : "";
   const barRows = MLABELS.map((m,i) => { const d=data[mkey(selYear,i+1)]||{}; const pd=data[mkey(prevYear,i+1)]||{}; return {name:m,curr:((d.gas1_cost||0)+(d.gas2_cost||0))||null,prev:((pd.gas1_cost||0)+(pd.gas2_cost||0))||null}; });
   const useRows = MLABELS.map((m,i) => { const d=data[mkey(selYear,i+1)]||{}; const pd=data[mkey(prevYear,i+1)]||{}; return {name:m,curr:((d.gas1_usage||0)+(d.gas2_usage||0))||null,prev:((pd.gas1_usage||0)+(pd.gas2_usage||0))||null,a:d.gas1_usage||0,b:d.gas2_usage||0}; });
   return (
@@ -478,12 +433,12 @@ function TabCompare({ data, allYears, mob }) {
     { label: "가스사용량(m3)", f1: "gas1_usage", f2: "gas2_usage", color: "#1D9E75" },
   ];
   const getVal = (y, lm2, row) => {
-    if (row.bold) return ["e1_cost","e2_cost","gas1_cost","gas2_cost"].reduce((s, f) => s + sumTo(data, y, f, lm2), 0);
-    return sumTo(data, y, row.f1, lm2) + sumTo(data, y, row.f2, lm2);
+    if (row.bold) return ["e1_cost","e2_cost","gas1_cost","gas2_cost"].reduce((s,f) => s+sumTo(data,y,f,lm2), 0);
+    return sumTo(data,y,row.f1,lm2)+sumTo(data,y,row.f2,lm2);
   };
   const makeYL = (f1, f2) => MLABELS.map((m, i) => {
     const row = { name: m };
-    allYears.forEach(y => { const d = data[mkey(y, i + 1)] || {}; const v = (d[f1] || 0) + (d[f2] || 0); row[y] = v || null; });
+    allYears.forEach(y => { const d=data[mkey(y,i+1)]||{}; const v=(d[f1]||0)+(d[f2]||0); row[y]=v||null; });
     return row;
   });
   const secs = [
@@ -502,12 +457,8 @@ function TabCompare({ data, allYears, mob }) {
               <tr style={{ borderBottom:"0.5px solid var(--color-border-secondary)" }}>
                 <th style={{ padding:mob?"4px 5px":"6px 8px", textAlign:"left", color:"var(--color-text-secondary)", fontWeight:500, fontSize:mob?10:12, whiteSpace:"nowrap" }}>항목</th>
                 {allYears.map(y => {
-                  const lm2 = Math.max(lastM(data, y, "e1_cost"), lastM(data, y, "gas1_cost"));
-                  return (
-                    <th key={y} style={{ padding:mob?"4px 5px":"6px 8px", textAlign:"right", color:"var(--color-text-secondary)", fontWeight:500, whiteSpace:"nowrap", fontSize:mob?10:12 }}>
-                      {y}{lm2 > 0 && lm2 < 12 && <span style={{ fontSize:9, marginLeft:2, color:"#185FA5", display:"block" }}>({lm2}월)</span>}
-                    </th>
-                  );
+                  const lm2 = Math.max(lastM(data,y,"e1_cost"),lastM(data,y,"gas1_cost"));
+                  return (<th key={y} style={{ padding:mob?"4px 5px":"6px 8px", textAlign:"right", color:"var(--color-text-secondary)", fontWeight:500, whiteSpace:"nowrap", fontSize:mob?10:12 }}>{y}{lm2>0&&lm2<12&&<span style={{ fontSize:9, marginLeft:2, color:"#185FA5", display:"block" }}>({lm2}월)</span>}</th>);
                 })}
               </tr>
             </thead>
@@ -516,15 +467,15 @@ function TabCompare({ data, allYears, mob }) {
                 <tr key={ri} style={{ borderBottom:"0.5px solid var(--color-border-tertiary)", background:row.bold?"var(--color-background-secondary)":"transparent" }}>
                   <td style={{ padding:mob?"4px 5px":"6px 8px", color:row.color||"var(--color-text-primary)", fontWeight:row.bold?500:400, fontSize:mob?10:12, whiteSpace:"nowrap" }}>{row.label}</td>
                   {allYears.map((y, yi) => {
-                    const lm2 = Math.max(lastM(data, y, "e1_cost"), lastM(data, y, "gas1_cost")) || 12;
-                    const val = getVal(y, lm2, row);
-                    const py2 = allYears[yi - 1];
-                    const pval = py2 ? getVal(py2, lm2, row) : null;
-                    const c = pct(val, pval);
+                    const lm2 = Math.max(lastM(data,y,"e1_cost"),lastM(data,y,"gas1_cost"))||12;
+                    const val = getVal(y,lm2,row);
+                    const py2 = allYears[yi-1];
+                    const pval = py2 ? getVal(py2,lm2,row) : null;
+                    const c = pct(val,pval);
                     return (
                       <td key={y} style={{ padding:mob?"4px 5px":"6px 8px", textAlign:"right", fontWeight:row.bold?500:400 }}>
-                        <div style={{ fontSize:mob?10:12 }}>{val > 0 ? fmt(val) : "-"}</div>
-                        {c != null && val > 0 && <div style={{ fontSize:9, color:c > 0 ? "#A32D2D" : "#3B6D11" }}>{fmtP(c)}</div>}
+                        <div style={{ fontSize:mob?10:12 }}>{val>0?fmt(val):"-"}</div>
+                        {c!=null&&val>0&&<div style={{ fontSize:9, color:c>0?"#A32D2D":"#3B6D11" }}>{fmtP(c)}</div>}
                       </td>
                     );
                   })}
@@ -537,7 +488,7 @@ function TabCompare({ data, allYears, mob }) {
       <YearLine title="연도별 월별 전기요금 비교" rows={makeYL("e1_cost","e2_cost")} years={allYears} mob={mob} unit="원" />
       <YearLine title="연도별 월별 가스요금 비교" rows={makeYL("gas1_cost","gas2_cost")} years={allYears} mob={mob} unit="원" />
       {secs.map((sec, si) => {
-        const trows = makeYL(sec.f1, sec.f2);
+        const trows = makeYL(sec.f1,sec.f2);
         return (
           <div key={si} style={{ background:"var(--color-background-primary)", border:"0.5px solid var(--color-border-tertiary)", borderRadius:12, padding:mob?"0.875rem":"1.25rem", marginBottom:"0.875rem" }}>
             <div style={{ fontSize:mob?12:13, fontWeight:500, marginBottom:"0.875rem" }}>{sec.title}</div>
@@ -547,27 +498,23 @@ function TabCompare({ data, allYears, mob }) {
                   <tr style={{ borderBottom:"0.5px solid var(--color-border-secondary)" }}>
                     <th style={{ padding:mob?"4px 5px":"5px 7px", textAlign:"left", color:"var(--color-text-secondary)", fontWeight:500, width:mob?28:36, fontSize:mob?10:11 }}>월</th>
                     {allYears.map(y => {
-                      const lm2 = lastM(data, y, sec.f1);
-                      return (
-                        <th key={y} style={{ padding:mob?"4px 5px":"5px 7px", textAlign:"right", color:sec.color, fontWeight:500, whiteSpace:"nowrap", fontSize:mob?10:11 }}>
-                          {y}{lm2 > 0 && lm2 < 12 && <span style={{ fontSize:9, color:"#185FA5", display:"block" }}>({lm2}월)</span>}
-                        </th>
-                      );
+                      const lm2 = lastM(data,y,sec.f1);
+                      return (<th key={y} style={{ padding:mob?"4px 5px":"5px 7px", textAlign:"right", color:sec.color, fontWeight:500, whiteSpace:"nowrap", fontSize:mob?10:11 }}>{y}{lm2>0&&lm2<12&&<span style={{ fontSize:9, color:"#185FA5", display:"block" }}>({lm2}월)</span>}</th>);
                     })}
                   </tr>
                 </thead>
                 <tbody>
                   {trows.map((row, mi) => (
-                    <tr key={mi} style={{ borderBottom:"0.5px solid var(--color-border-tertiary)", opacity:allYears.some(y => row[y]) ? 1 : 0.4 }}>
-                      <td style={{ padding:mob?"4px 5px":"5px 7px", fontWeight:500, fontSize:mob?10:11 }}>{row.name}</td>
+                    <tr key={mi} style={{ borderBottom:"0.5px solid var(--color-border-tertiary)", opacity:allYears.some(y=>row[y])?1:0.4 }}>
+                      <td style={{ padding:mob?"4px 5px":"5px 7px", fontWeight:700, fontSize:mob?11:12 }}>{row.name}</td>
                       {allYears.map((y, yi) => {
                         const val = row[y];
-                        const pval = yi > 0 ? trows[mi][allYears[yi - 1]] : null;
-                        const c = pct(val, pval);
+                        const pval = yi>0?trows[mi][allYears[yi-1]]:null;
+                        const c = pct(val,pval);
                         return (
                           <td key={y} style={{ padding:mob?"4px 5px":"5px 7px", textAlign:"right" }}>
-                            <div style={{ color:val?"var(--color-text-primary)":"var(--color-text-tertiary)", fontWeight:val?500:400, fontSize:mob?10:11 }}>{val ? fmt(val) : "-"}</div>
-                            {c != null && val && <div style={{ fontSize:9, color:c > 0 ? "#A32D2D" : "#3B6D11" }}>{fmtP(c)}</div>}
+                            <div style={{ color:val?"var(--color-text-primary)":"var(--color-text-tertiary)", fontWeight:val?500:400, fontSize:mob?10:11 }}>{val?fmt(val):"-"}</div>
+                            {c!=null&&val&&<div style={{ fontSize:9, color:c>0?"#A32D2D":"#3B6D11" }}>{fmtP(c)}</div>}
                           </td>
                         );
                       })}
@@ -576,15 +523,15 @@ function TabCompare({ data, allYears, mob }) {
                   <tr style={{ borderTop:"1px solid var(--color-border-secondary)", background:"var(--color-background-secondary)" }}>
                     <td style={{ padding:mob?"4px 5px":"5px 7px", fontSize:mob?9:10, color:"var(--color-text-secondary)" }}>합계</td>
                     {allYears.map((y, yi) => {
-                      const lm2 = lastM(data, y, sec.f1) || 12;
-                      const val = sumTo(data, y, sec.f1, lm2) + sumTo(data, y, sec.f2, lm2);
-                      const py2 = allYears[yi - 1];
-                      const pv = py2 ? sumTo(data, py2, sec.f1, lm2) + sumTo(data, py2, sec.f2, lm2) : null;
-                      const c = pct(val, pv);
+                      const lm2 = lastM(data,y,sec.f1)||12;
+                      const val = sumTo(data,y,sec.f1,lm2)+sumTo(data,y,sec.f2,lm2);
+                      const py2 = allYears[yi-1];
+                      const pv = py2?sumTo(data,py2,sec.f1,lm2)+sumTo(data,py2,sec.f2,lm2):null;
+                      const c = pct(val,pv);
                       return (
                         <td key={y} style={{ padding:mob?"4px 5px":"5px 7px", textAlign:"right" }}>
-                          <div style={{ color:sec.color, fontWeight:500, fontSize:mob?10:11 }}>{val > 0 ? fmt(val) : "-"}</div>
-                          {c != null && val > 0 && <div style={{ fontSize:9, color:c > 0 ? "#A32D2D" : "#3B6D11" }}>{fmtP(c)}</div>}
+                          <div style={{ color:sec.color, fontWeight:500, fontSize:mob?10:11 }}>{val>0?fmt(val):"-"}</div>
+                          {c!=null&&val>0&&<div style={{ fontSize:9, color:c>0?"#A32D2D":"#3B6D11" }}>{fmtP(c)}</div>}
                         </td>
                       );
                     })}
@@ -608,143 +555,137 @@ function TabEntry({ stored, setStored, mob }) {
 
   useEffect(() => {
     const bm2 = Number(eMonth);
-    const um2 = bm2 === 1 ? 12 : bm2 - 1;
-    const uy2 = bm2 === 1 ? Number(eYear) - 1 : Number(eYear);
-    const k = uy2 + "-" + String(um2).padStart(2, "0");
-    const base = Object.assign({}, EBASE[k] || {}, GBASE[k] || {});
-    setForm(Object.assign({}, base, stored[k] || {}));
+    const um2 = bm2===1?12:bm2-1;
+    const uy2 = bm2===1?Number(eYear)-1:Number(eYear);
+    const k = uy2+"-"+String(um2).padStart(2,"0");
+    const base = Object.assign({},EBASE[k]||{},GBASE[k]||{});
+    setForm(Object.assign({},base,stored[k]||{}));
   }, [eYear, eMonth, stored]);
 
   const bm = Number(eMonth);
-  const um = bm === 1 ? 12 : bm - 1;
-  const uy = bm === 1 ? Number(eYear) - 1 : Number(eYear);
+  const um = bm===1?12:bm-1;
+  const uy = bm===1?Number(eYear)-1:Number(eYear);
 
   const applyAndSave = useCallback(async (patch, sheetSaves) => {
-    const k = uy + "-" + String(um).padStart(2, "0");
-    const updated = Object.assign({}, stored, { [k]: Object.assign({}, stored[k] || {}, patch) });
+    const k = uy+"-"+String(um).padStart(2,"0");
+    const updated = Object.assign({},stored,{[k]:Object.assign({},stored[k]||{},patch)});
     setStored(updated);
-    try { localStorage.setItem(SKEY, JSON.stringify(updated)); } catch (e) {}
+    try { localStorage.setItem(SKEY,JSON.stringify(updated)); } catch(e) {}
     setSyncing(true);
-    await Promise.all(sheetSaves.map(({ sheet, data }) => saveToSheet(sheet, uy, um, data)));
+    await Promise.all(sheetSaves.map(({sheet,data}) => saveToSheet(sheet,uy,um,data)));
     setSyncing(false);
   }, [stored, uy, um, setStored]);
 
   const saveFields = useCallback(async (fields, firstField) => {
     const patch = {};
-    fields.forEach(f => { if (form[f] != null && form[f] !== "") patch[f] = Number(form[f]); });
+    fields.forEach(f => { if(form[f]!=null&&form[f]!=="") patch[f]=Number(form[f]); });
     const bySheet = {};
-    fields.forEach(f => {
-      const sn = FIELD_TO_SHEET[f];
-      if (sn && form[f] != null && form[f] !== "") { bySheet[sn] = bySheet[sn] || {}; bySheet[sn][f] = Number(form[f]); }
-    });
-    const sheetSaves = Object.entries(bySheet).map(([sheet, data]) => ({ sheet, data }));
-    await applyAndSave(patch, sheetSaves);
-    setSaved(s => Object.assign({}, s, { [firstField]: true }));
-    setTimeout(() => setSaved(s => Object.assign({}, s, { [firstField]: false })), 2000);
+    fields.forEach(f => { const sn=FIELD_TO_SHEET[f]; if(sn&&form[f]!=null&&form[f]!==""){bySheet[sn]=bySheet[sn]||{};bySheet[sn][f]=Number(form[f]);} });
+    const sheetSaves = Object.entries(bySheet).map(([sheet,data]) => ({sheet,data}));
+    await applyAndSave(patch,sheetSaves);
+    setSaved(s => Object.assign({},s,{[firstField]:true}));
+    setTimeout(() => setSaved(s => Object.assign({},s,{[firstField]:false})), 2000);
   }, [form, applyAndSave]);
 
   const saveAll = useCallback(async () => {
     const patch = {};
-    Object.keys(form).forEach(f => { if (form[f] != null && form[f] !== "") patch[f] = Number(form[f]); });
+    Object.keys(form).forEach(f => { if(form[f]!=null&&form[f]!=="") patch[f]=Number(form[f]); });
     const bySheet = {};
-    Object.keys(form).forEach(f => {
-      const sn = FIELD_TO_SHEET[f];
-      if (sn && form[f] != null && form[f] !== "") { bySheet[sn] = bySheet[sn] || {}; bySheet[sn][f] = Number(form[f]); }
-    });
-    const sheetSaves = Object.entries(bySheet).map(([sheet, data]) => ({ sheet, data }));
-    await applyAndSave(patch, sheetSaves);
-    setSaved({ all: true });
+    Object.keys(form).forEach(f => { const sn=FIELD_TO_SHEET[f]; if(sn&&form[f]!=null&&form[f]!==""){bySheet[sn]=bySheet[sn]||{};bySheet[sn][f]=Number(form[f]);} });
+    const sheetSaves = Object.entries(bySheet).map(([sheet,data]) => ({sheet,data}));
+    await applyAndSave(patch,sheetSaves);
+    setSaved({all:true});
     setTimeout(() => setSaved({}), 2000);
   }, [form, applyAndSave]);
 
   const eAccs = [
-    { id: "e1", label: "기본전기", sub: "01-0072-8018", color: "#378ADD", bg: "#EBF3FC", bd: "#378ADD" },
-    { id: "e2", label: "4,5층 냉난방", sub: "01-6224-6486 (2025.10~)", color: "#5D96CC", bg: "#E6F1FB", bd: "#5D96CC" },
+    { id:"e1", label:"기본전기", sub:"01-0072-8018", color:"#378ADD", bg:"#EBF3FC", bd:"#378ADD" },
+    { id:"e2", label:"4,5층 냉난방", sub:"01-6224-6486 (2025.10~)", color:"#5D96CC", bg:"#E6F1FB", bd:"#5D96CC" },
   ];
   const gAccs = [
-    { id: "gas1", label: "5층주방", sub: "6000905480", color: "#1D9E75", bg: "#E1F5EE", bd: "#1D9E75" },
-    { id: "gas2", label: "옥상냉난방", sub: "6000909299", color: "#0F6E56", bg: "#D8F2E8", bd: "#0F6E56" },
+    { id:"gas1", label:"5층주방", sub:"6000905480", color:"#1D9E75", bg:"#E1F5EE", bd:"#1D9E75" },
+    { id:"gas2", label:"옥상냉난방", sub:"6000909299", color:"#0F6E56", bg:"#D8F2E8", bd:"#0F6E56" },
   ];
 
   return (
     <div>
-      <div style={{ background: "#E6F1FB", border: "0.5px solid #B5D4F4", borderRadius: 8, padding: "10px 14px", marginBottom: "1rem", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 8 }}>
+      <div style={{ background:"#E6F1FB", border:"0.5px solid #B5D4F4", borderRadius:8, padding:"10px 14px", marginBottom:"1rem", display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:8 }}>
         <div>
-          <span style={{ fontSize: 13, color: "#0C447C", fontWeight: 500 }}>[청구서] {eYear}년 {bm}월 입력</span>
-          <span style={{ fontSize: 12, color: "#185FA5", marginLeft: 10 }}>→ <strong>{uy}년 {um}월 사용량</strong>으로 반영</span>
+          <span style={{ fontSize:13, color:"#0C447C", fontWeight:500 }}>[청구서] {eYear}년 {bm}월 입력</span>
+          <span style={{ fontSize:12, color:"#185FA5", marginLeft:10 }}>→ <strong>{uy}년 {um}월 사용량</strong>으로 반영</span>
         </div>
-        {syncing && <span style={{ fontSize: 11, color: "#534AB7", fontWeight: 500 }}>☁️ 구글 시트 저장 중...</span>}
+        {syncing && <span style={{ fontSize:11, color:"#534AB7", fontWeight:500 }}>☁️ 구글 시트 저장 중...</span>}
       </div>
-      <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: "1.25rem", flexWrap: "wrap" }}>
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          <label style={{ fontSize: 12, color: "var(--color-text-secondary)" }}>청구서 연도</label>
-          <select value={eYear} onChange={e => setEYear(e.target.value)} style={{ fontSize: 13, padding: "4px 10px", borderRadius: 6, border: "0.5px solid var(--color-border-secondary)", background: "var(--color-background-secondary)", color: "var(--color-text-primary)" }}>
-            {["2024","2025","2026","2027"].map(y => <option key={y} value={y}>{y}년</option>)}
+      <div style={{ display:"flex", gap:12, alignItems:"center", marginBottom:"1.25rem", flexWrap:"wrap" }}>
+        <div style={{ display:"flex", gap:8, alignItems:"center" }}>
+          <label style={{ fontSize:12, color:"var(--color-text-secondary)" }}>청구서 연도</label>
+          <select value={eYear} onChange={e=>setEYear(e.target.value)} style={{ fontSize:13, padding:"4px 10px", borderRadius:6, border:"0.5px solid var(--color-border-secondary)", background:"var(--color-background-secondary)", color:"var(--color-text-primary)" }}>
+            {["2024","2025","2026","2027"].map(y=><option key={y} value={y}>{y}년</option>)}
           </select>
         </div>
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          <label style={{ fontSize: 12, color: "var(--color-text-secondary)" }}>청구서 월</label>
-          <select value={eMonth} onChange={e => setEMonth(e.target.value)} style={{ fontSize: 13, padding: "4px 10px", borderRadius: 6, border: "0.5px solid var(--color-border-secondary)", background: "var(--color-background-secondary)", color: "var(--color-text-primary)" }}>
-            {MLABELS.map((m, i) => <option key={i} value={String(i+1).padStart(2,"0")}>{m}</option>)}
+        <div style={{ display:"flex", gap:8, alignItems:"center" }}>
+          <label style={{ fontSize:12, color:"var(--color-text-secondary)" }}>청구서 월</label>
+          <select value={eMonth} onChange={e=>setEMonth(e.target.value)} style={{ fontSize:13, padding:"4px 10px", borderRadius:6, border:"0.5px solid var(--color-border-secondary)", background:"var(--color-background-secondary)", color:"var(--color-text-primary)" }}>
+            {MLABELS.map((m,i)=><option key={i} value={String(i+1).padStart(2,"0")}>{m}월</option>)}
           </select>
         </div>
       </div>
-      <div style={{ marginBottom: "1rem" }}>
-        <div style={{ fontSize: 12, fontWeight: 500, color: "#185FA5", marginBottom: "0.625rem" }}>전기요금 (사용월 기준)</div>
-        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: 12 }}>
+      <div style={{ marginBottom:"1rem" }}>
+        <div style={{ fontSize:12, fontWeight:500, color:"#185FA5", marginBottom:"0.625rem" }}>전기요금 (사용월 기준)</div>
+        <div style={{ display:"grid", gridTemplateColumns:mob?"1fr":"1fr 1fr", gap:12 }}>
           {eAccs.map(acc => {
-            const ek = eYear + "-" + eMonth;
-            const existCost = (EBASE[ek] || {})[acc.id + "_cost"];
-            const eFields = [{ f: acc.id+"_usage", label: "사용량", unit: "kWh", ph: "예: 2500" }, { f: acc.id+"_cost", label: "납부요금", unit: "원", ph: "예: 650000" }];
+            const ek = eYear+"-"+eMonth;
+            const existCost = (EBASE[ek]||{})[acc.id+"_cost"];
+            const eFields = [{f:acc.id+"_usage",label:"사용량",unit:"kWh",ph:"예: 2500"},{f:acc.id+"_cost",label:"납부요금",unit:"원",ph:"예: 650000"}];
             return (
-              <div key={acc.id} style={{ background: "var(--color-background-primary)", border: "0.5px solid "+acc.bd+"40", borderRadius: 12, padding: "1rem" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: "0.875rem" }}>
+              <div key={acc.id} style={{ background:"var(--color-background-primary)", border:"0.5px solid "+acc.bd+"40", borderRadius:12, padding:"1rem" }}>
+                <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:"0.875rem" }}>
                   <div style={{ width:32,height:32,borderRadius:8,background:acc.bg,display:"flex",alignItems:"center",justifyContent:"center" }}><div style={{ width:10,height:10,borderRadius:2,background:acc.color }} /></div>
                   <div><div style={{ fontSize:13,fontWeight:500 }}>{acc.label}</div><div style={{ fontSize:10,color:"var(--color-text-tertiary)" }}>{acc.sub}</div></div>
-                  {existCost && <div style={{ marginLeft:"auto",fontSize:10,color:acc.color }}>기존: {fmt(existCost)}원</div>}
+                  {existCost&&<div style={{ marginLeft:"auto",fontSize:10,color:acc.color }}>기존: {fmt(existCost)}원</div>}
                 </div>
                 <div style={{ display:"grid",gridTemplateColumns:"1fr 1fr",gap:8 }}>
-                  {eFields.map(field => (
+                  {eFields.map(field=>(
                     <div key={field.f}>
                       <label style={{ fontSize:11,color:"var(--color-text-secondary)",display:"block",marginBottom:3 }}>{field.label} ({field.unit})</label>
-                      <input type="number" placeholder={field.ph} value={form[field.f]!=null?form[field.f]:""} onChange={ev => setForm(p => Object.assign({},p,{[field.f]:ev.target.value}))} style={{ width:"100%",padding:"7px 8px",fontSize:12,borderRadius:6,border:"0.5px solid var(--color-border-secondary)",background:"var(--color-background-secondary)",color:"var(--color-text-primary)",boxSizing:"border-box" }} />
+                      <input type="number" placeholder={field.ph} value={form[field.f]!=null?form[field.f]:""} onChange={ev=>setForm(p=>Object.assign({},p,{[field.f]:ev.target.value}))} style={{ width:"100%",padding:"7px 8px",fontSize:12,borderRadius:6,border:"0.5px solid var(--color-border-secondary)",background:"var(--color-background-secondary)",color:"var(--color-text-primary)",boxSizing:"border-box" }} />
                     </div>
                   ))}
                 </div>
                 <div style={{ marginTop:"0.75rem",display:"flex",justifyContent:"flex-end",alignItems:"center",gap:8 }}>
-                  {saved[acc.id+"_usage"] && <span style={{ fontSize:11,color:acc.color,fontWeight:500 }}>저장됨! ✓</span>}
-                  <button onClick={() => saveFields([acc.id+"_usage",acc.id+"_cost"], acc.id+"_usage")} style={{ padding:"6px 16px",fontSize:12,fontWeight:500,borderRadius:6,border:"0.5px solid "+acc.bd,background:"transparent",color:acc.color,cursor:"pointer" }}>{acc.label} 저장</button>
+                  {saved[acc.id+"_usage"]&&<span style={{ fontSize:11,color:acc.color,fontWeight:500 }}>저장됨! ✓</span>}
+                  <button onClick={()=>saveFields([acc.id+"_usage",acc.id+"_cost"],acc.id+"_usage")} style={{ padding:"6px 16px",fontSize:12,fontWeight:500,borderRadius:6,border:"0.5px solid "+acc.bd,background:"transparent",color:acc.color,cursor:"pointer" }}>{acc.label} 저장</button>
                 </div>
               </div>
             );
           })}
         </div>
       </div>
-      <div style={{ marginBottom: "1.25rem" }}>
+      <div style={{ marginBottom:"1.25rem" }}>
         <div style={{ fontSize:12,fontWeight:500,color:"#085041",marginBottom:"0.625rem" }}>가스요금 (사용월 기준)</div>
         <div style={{ display:"grid",gridTemplateColumns:mob?"1fr":"1fr 1fr",gap:12 }}>
           {gAccs.map(acc => {
-            const gk = eYear + "-" + eMonth;
-            const existCost = (GBASE[gk] || {})[acc.id+"_cost"];
-            const gFields = [{ f:acc.id+"_usage", label:"사용량", unit:"m3", ph:"예: 20" }, { f:acc.id+"_heat", label:"사용열량", unit:"MJ", ph:"예: 845" }, { f:acc.id+"_cost", label:"결제금액", unit:"원", ph:"예: 22570" }];
+            const gk = eYear+"-"+eMonth;
+            const existCost = (GBASE[gk]||{})[acc.id+"_cost"];
+            const gFields = [{f:acc.id+"_usage",label:"사용량",unit:"m3",ph:"예: 20"},{f:acc.id+"_heat",label:"사용열량",unit:"MJ",ph:"예: 845"},{f:acc.id+"_cost",label:"결제금액",unit:"원",ph:"예: 22570"}];
             return (
               <div key={acc.id} style={{ background:"var(--color-background-primary)",border:"0.5px solid "+acc.bd+"40",borderRadius:12,padding:"1rem" }}>
                 <div style={{ display:"flex",alignItems:"center",gap:8,marginBottom:"0.875rem" }}>
                   <div style={{ width:32,height:32,borderRadius:8,background:acc.bg,display:"flex",alignItems:"center",justifyContent:"center" }}><div style={{ width:10,height:10,borderRadius:2,background:acc.color }} /></div>
                   <div><div style={{ fontSize:13,fontWeight:500 }}>{acc.label}</div><div style={{ fontSize:10,color:"var(--color-text-tertiary)" }}>{acc.sub}</div></div>
-                  {existCost && <div style={{ marginLeft:"auto",fontSize:10,color:acc.color }}>기존: {fmt(existCost)}원</div>}
+                  {existCost&&<div style={{ marginLeft:"auto",fontSize:10,color:acc.color }}>기존: {fmt(existCost)}원</div>}
                 </div>
                 <div style={{ display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8 }}>
-                  {gFields.map(field => (
+                  {gFields.map(field=>(
                     <div key={field.f}>
                       <label style={{ fontSize:11,color:"var(--color-text-secondary)",display:"block",marginBottom:3 }}>{field.label} ({field.unit})</label>
-                      <input type="number" placeholder={field.ph} value={form[field.f]!=null?form[field.f]:""} onChange={ev => setForm(p => Object.assign({},p,{[field.f]:ev.target.value}))} style={{ width:"100%",padding:"7px 8px",fontSize:12,borderRadius:6,border:"0.5px solid var(--color-border-secondary)",background:"var(--color-background-secondary)",color:"var(--color-text-primary)",boxSizing:"border-box" }} />
+                      <input type="number" placeholder={field.ph} value={form[field.f]!=null?form[field.f]:""} onChange={ev=>setForm(p=>Object.assign({},p,{[field.f]:ev.target.value}))} style={{ width:"100%",padding:"7px 8px",fontSize:12,borderRadius:6,border:"0.5px solid var(--color-border-secondary)",background:"var(--color-background-secondary)",color:"var(--color-text-primary)",boxSizing:"border-box" }} />
                     </div>
                   ))}
                 </div>
                 <div style={{ marginTop:"0.75rem",display:"flex",justifyContent:"flex-end",alignItems:"center",gap:8 }}>
-                  {saved[acc.id+"_usage"] && <span style={{ fontSize:11,color:acc.color,fontWeight:500 }}>저장됨! ✓</span>}
-                  <button onClick={() => saveFields([acc.id+"_usage",acc.id+"_heat",acc.id+"_cost"], acc.id+"_usage")} style={{ padding:"6px 16px",fontSize:12,fontWeight:500,borderRadius:6,border:"0.5px solid "+acc.bd,background:"transparent",color:acc.color,cursor:"pointer" }}>{acc.label} 저장</button>
+                  {saved[acc.id+"_usage"]&&<span style={{ fontSize:11,color:acc.color,fontWeight:500 }}>저장됨! ✓</span>}
+                  <button onClick={()=>saveFields([acc.id+"_usage",acc.id+"_heat",acc.id+"_cost"],acc.id+"_usage")} style={{ padding:"6px 16px",fontSize:12,fontWeight:500,borderRadius:6,border:"0.5px solid "+acc.bd,background:"transparent",color:acc.color,cursor:"pointer" }}>{acc.label} 저장</button>
                 </div>
               </div>
             );
@@ -753,9 +694,9 @@ function TabEntry({ stored, setStored, mob }) {
       </div>
       <div style={{ display:"flex",gap:12,alignItems:"center" }}>
         <button onClick={saveAll} style={{ padding:"10px 32px",fontSize:13,fontWeight:500,borderRadius:8,border:"none",background:"#534AB7",color:"#fff",cursor:"pointer",opacity:syncing?0.7:1 }}>
-          {syncing ? "저장 중..." : saved.all ? "저장됨! ✓" : "전체 저장"}
+          {syncing?"저장 중...":saved.all?"저장됨! ✓":"전체 저장"}
         </button>
-        {saved.all && <span style={{ fontSize:12,color:"#534AB7",fontWeight:500 }}>☁️ 구글 시트 저장 완료!</span>}
+        {saved.all&&<span style={{ fontSize:12,color:"#534AB7",fontWeight:500 }}>☁️ 구글 시트 저장 완료!</span>}
         <span style={{ fontSize:10,color:"var(--color-text-tertiary)",marginLeft:"auto" }}>전기/가스 모두 사용월 기준 (청구월 - 1개월)</span>
       </div>
     </div>
@@ -776,25 +717,25 @@ export default function App() {
   useEffect(() => {
     async function init() {
       let localData = {};
-      try { const r = localStorage.getItem(SKEY); if (r) localData = JSON.parse(r); } catch (e) {}
+      try { const r=localStorage.getItem(SKEY); if(r) localData=JSON.parse(r); } catch(e) {}
       setStored(localData);
       setLoading(false);
       try {
         const sheetData = await loadFromSheets();
         const merged = {};
-        const allKeys = new Set([...Object.keys(localData), ...Object.keys(sheetData)]);
-        allKeys.forEach(k => { merged[k] = Object.assign({}, localData[k] || {}, sheetData[k] || {}); });
+        const allKeys = new Set([...Object.keys(localData),...Object.keys(sheetData)]);
+        allKeys.forEach(k => { merged[k]=Object.assign({},localData[k]||{},sheetData[k]||{}); });
         setStored(merged);
-        try { localStorage.setItem(SKEY, JSON.stringify(merged)); } catch (e) {}
+        try { localStorage.setItem(SKEY,JSON.stringify(merged)); } catch(e) {}
         setSheetStatus("ok");
-      } catch (e) { setSheetStatus("error"); }
+      } catch(e) { setSheetStatus("error"); }
     }
     init();
   }, []);
 
   const data = merge(stored);
-  const allYears = [...new Set(["2023","2024","2025","2026",...Object.keys(data).map(k => k.slice(0,4))])].sort();
-  const prevYear = String(Number(selYear) - 1);
+  const allYears = [...new Set(["2023","2024","2025","2026",...Object.keys(data).map(k=>k.slice(0,4))])].sort();
+  const prevYear = String(Number(selYear)-1);
   useEffect(() => { setCliE(null); setCliG(null); }, [selYear]);
 
   const lmE = Math.max(lastM(data,selYear,"e1_cost"),lastM(data,selYear,"e2_cost"));
@@ -804,22 +745,16 @@ export default function App() {
   const isPartial = lmAll > 0 && lmAll < 12;
   const compareLabel = isPartial ? selYear+"년 1~"+upTo+"월 -> "+prevYear+"년 동일기간" : selYear+"년 전체 -> "+prevYear+"년 전체";
 
-  // ★ 컬러 탭 스타일
   const tabSt = (id) => {
     const tc = TAB_COLORS[id];
     const isActive = tab === id;
     return {
-      padding: mob ? "7px 9px" : "8px 16px",
-      fontSize: mob ? 11 : 13,
-      border: "none",
-      borderRadius: "6px 6px 0 0",
-      cursor: "pointer",
-      whiteSpace: "nowrap",
+      padding: mob ? "7px 9px" : "8px 16px", fontSize: mob ? 11 : 13,
+      border: "none", borderRadius: "6px 6px 0 0", cursor: "pointer", whiteSpace: "nowrap",
       background: isActive ? tc.bg : "transparent",
       color: isActive ? "#fff" : tc.text,
-      borderBottom: isActive ? "2px solid " + tc.bg : "2px solid transparent",
-      fontWeight: isActive ? 600 : 400,
-      marginBottom: -1,
+      borderBottom: isActive ? "2px solid "+tc.bg : "2px solid transparent",
+      fontWeight: isActive ? 600 : 400, marginBottom: -1,
       transition: "background 0.15s, color 0.15s",
     };
   };
@@ -837,29 +772,21 @@ export default function App() {
           {["기본전기 01-0072-8018","냉난방전기 01-6224-6486","5층가스 6000905480","냉난방가스 6000909299"].map((t,i) => (
             <span key={i} style={{ fontSize:10, padding:"3px 8px", borderRadius:20, background:i<2?"#E6F1FB":"#E1F5EE", color:i<2?"#0C447C":"#085041", fontWeight:500 }}>{t}</span>
           ))}
-<span style={{ fontSize:10, padding:"3px 8px", borderRadius:20, fontWeight:500, background:sheetStatus==="ok"?"#1a1a1a":sheetStatus==="error"?"#FCEBEB":"#F5F5F5", color:sheetStatus==="ok"?"#ffffff":sheetStatus==="error"?"#A32D2D":"#888" }}>{sheetStatus==="ok"?"☁️ DATA시트 연결됨":sheetStatus==="error"?"⚠️ 시트 연결 실패":"☁️ 연결 중..."}
-          </span>
+          <span style={{ fontSize:10, padding:"3px 8px", borderRadius:20, fontWeight:500, background:sheetStatus==="ok"?"#1a1a1a":sheetStatus==="error"?"#FCEBEB":"#F5F5F5", color:sheetStatus==="ok"?"#ffffff":sheetStatus==="error"?"#A32D2D":"#888" }}>{sheetStatus==="ok"?"☁️ DATA시트 연결됨":sheetStatus==="error"?"⚠️ 시트 연결 실패":"☁️ 연결 중..."}</span>
         </div>
       </div>
-
-      {/* ★ 컬러 탭 메뉴 */}
       <div style={{ display:"flex", gap:2, marginBottom:"1.25rem", borderBottom:"1px solid var(--color-border-tertiary)", overflowX:"auto" }}>
         {[["main","통합 현황"],["elec","전기요금"],["gas","가스요금"],["compare","연도 비교"],["entry","데이터 입력"]].map(item => (
           <button key={item[0]} onClick={() => setTab(item[0])} style={tabSt(item[0])}>{item[1]}</button>
         ))}
       </div>
-
       {(tab==="main"||tab==="elec"||tab==="gas") && (
         <div style={{ display:"flex", gap:10, alignItems:"center", marginBottom:"1rem", flexWrap:"wrap" }}>
           <label style={{ fontSize:12, color:"var(--color-text-secondary)" }}>조회 연도</label>
-          <select value={selYear} onChange={e => setSelYear(e.target.value)} style={{ fontSize:13, padding:"4px 10px", borderRadius:6, border:"0.5px solid var(--color-border-secondary)", background:"var(--color-background-secondary)", color:"var(--color-text-primary)" }}>
-            {allYears.map(y => <option key={y} value={y}>{y}년</option>)}
+          <select value={selYear} onChange={e=>setSelYear(e.target.value)} style={{ fontSize:13, padding:"4px 10px", borderRadius:6, border:"0.5px solid var(--color-border-secondary)", background:"var(--color-background-secondary)", color:"var(--color-text-primary)" }}>
+            {allYears.map(y=><option key={y} value={y}>{y}년</option>)}
           </select>
-          {lmAll > 0 && (
-            <div style={{ fontSize:mob?11:12, padding:"4px 10px", borderRadius:6, background:"#E6F1FB", color:"#185FA5", border:"0.5px solid #B5D4F4" }}>
-              {compareLabel}
-            </div>
-          )}
+          {lmAll>0&&(<div style={{ fontSize:mob?11:12, padding:"4px 10px", borderRadius:6, background:"#E6F1FB", color:"#185FA5", border:"0.5px solid #B5D4F4" }}>{compareLabel}</div>)}
         </div>
       )}
       {tab==="main"    && <TabMain data={data} selYear={selYear} prevYear={prevYear} allYears={allYears} mob={mob} lmAll={lmAll} upTo={upTo} isPartial={isPartial} />}
