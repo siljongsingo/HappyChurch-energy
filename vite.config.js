@@ -3,5 +3,5 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/church-energy-dashboard/',  // ← 이 줄이 핵심!
+  base: '/HappyChurch-energy/',  // ← 이 줄이 핵심!
 })
