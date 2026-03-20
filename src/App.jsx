@@ -808,3 +808,106 @@ export default function App() {
   const [stored, setStored] = useState({});
   const [loading, setLoading] = useState(true);
   const [sheetStatus, setSheetStatus] = useState("loading");
+  const [selYear, setSelYear] = useState("2026");
+  const [cliE, setCliE] = useState(null);
+  const [cliG, setCliG] = useState(null);
+  const winW = useWinW();
+  const mob = winW < 640;
+
+  useEffect(() => {
+    async function init() {
+      let localData = {};
+      try {
+        const r = localStorage.getItem(SKEY);
+        if (r) localData = JSON.parse(r);
+      } catch (e) {}
+      setStored(localData);
+      setLoading(false);
+      try {
+        const sheetData = await loadFromSheets();
+        const merged = {};
+        const allKeys = new Set([...Object.keys(localData), ...Object.keys(sheetData)]);
+        allKeys.forEach(k => { merged[k] = Object.assign({}, localData[k] || {}, sheetData[k] || {}); });
+        setStored(merged);
+        try { localStorage.setItem(SKEY, JSON.stringify(merged)); } catch (e) {}
+        setSheetStatus("ok");
+      } catch (e) {
+        setSheetStatus("error");
+      }
+    }
+    init();
+  }, []);
+
+  const data = merge(stored);
+  const allYears = [...new Set(["2023","2024","2025","2026",...Object.keys(data).map(k => k.slice(0,4))])].sort();
+  const prevYear = String(Number(selYear) - 1);
+
+  useEffect(() => { setCliE(null); setCliG(null); }, [selYear]);
+
+  const lmE = Math.max(lastM(data,selYear,"e1_cost"),lastM(data,selYear,"e2_cost"));
+  const lmG = Math.max(lastM(data,selYear,"gas1_cost"),lastM(data,selYear,"gas2_cost"));
+  const lmAll = Math.max(lmE, lmG);
+  const upTo = lmAll || 12;
+  const isPartial = lmAll > 0 && lmAll < 12;
+  const compareLabel = isPartial ? selYear+"년 1~"+upTo+"월 -> "+prevYear+"년 동일기간" : selYear+"년 전체 -> "+prevYear+"년 전체";
+
+  const tabSt = (id) => ({
+    padding: mob ? "8px 10px" : "8px 16px", fontSize: mob ? 12 : 13,
+    border: "none", background: "transparent", cursor: "pointer", whiteSpace: "nowrap",
+    color: tab === id ? "var(--color-text-primary)" : "var(--color-text-secondary)",
+    borderBottom: tab === id ? "2px solid var(--color-text-primary)" : "2px solid transparent",
+    fontWeight: tab === id ? 500 : 400, marginBottom: -1
+  });
+
+  if (loading) return <div style={{ padding:"2rem", color:"var(--color-text-secondary)" }}>불러오는 중...</div>;
+
+  return (
+    <div style={{ fontFamily:"var(--font-sans)", maxWidth:980, margin:"0 auto", padding:mob?"0.75rem 0.75rem 3rem":"1rem 1rem 3rem" }}>
+      <div style={{ marginBottom:"1rem", display:"flex", alignItems:"flex-start", justifyContent:"space-between", flexDirection:mob?"column":"row", gap:8 }}>
+        <div>
+          <div style={{ fontSize:10, color:"var(--color-text-tertiary)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:3 }}>행복한교회 에너지 관리시스템</div>
+          <h1 style={{ fontSize:mob?17:21, fontWeight:500, margin:0 }}>에너지 통합 대시보드</h1>
+        </div>
+        <div style={{ display:"flex", gap:4, flexWrap:"wrap", alignItems:"center" }}>
+          {["전기 01-0072-8018","냉난방 01-6224-6486","가스 6000905480","가스 6000909299"].map((t,i) => (
+            <span key={i} style={{ fontSize:10, padding:"3px 8px", borderRadius:20, background:i<2?"#E6F1FB":"#E1F5EE", color:i<2?"#0C447C":"#085041", fontWeight:500 }}>{t}</span>
+          ))}
+          <span style={{ fontSize:10, padding:"3px 8px", borderRadius:20, fontWeight:500,
+            background:sheetStatus==="ok"?"#E1F5EE":sheetStatus==="error"?"#FCEBEB":"#F5F5F5",
+            color:sheetStatus==="ok"?"#085041":sheetStatus==="error"?"#A32D2D":"#888" }}>
+            {sheetStatus==="ok"?"☁️ 시트 연결됨":sheetStatus==="error"?"⚠️ 시트 연결 실패":"☁️ 연결 중..."}
+          </span>
+        </div>
+      </div>
+      <div style={{ display:"flex", gap:0, marginBottom:"1.25rem", borderBottom:"0.5px solid var(--color-border-tertiary)", overflowX:"auto" }}>
+        {[["main","통합 현황"],["elec","전기요금"],["gas","가스요금"],["compare","연도 비교"],["entry","데이터 입력"]].map(item => (
+          <button key={item[0]} onClick={() => setTab(item[0])} style={tabSt(item[0])}>{item[1]}</button>
+        ))}
+      </div>
+      {(tab==="main"||tab==="elec"||tab==="gas") && (
+        <div style={{ display:"flex", gap:10, alignItems:"center", marginBottom:"1rem", flexWrap:"wrap" }}>
+          <label style={{ fontSize:12, color:"var(--color-text-secondary)" }}>조회 연도</label>
+          <select value={selYear} onChange={e => setSelYear(e.target.value)}
+            style={{ fontSize:13, padding:"4px 10px", borderRadius:6, border:"0.5px solid var(--color-border-secondary)", background:"var(--color-background-secondary)", color:"var(--color-text-primary)" }}>
+            {allYears.map(y => <option key={y} value={y}>{y}년</option>)}
+          </select>
+          {lmAll > 0 && (
+            <div style={{ fontSize:mob?11:12, padding:"4px 10px", borderRadius:6, background:"#E6F1FB", color:"#185FA5", border:"0.5px solid #B5D4F4" }}>
+              {compareLabel}
+            </div>
+          )}
+        </div>
+      )}
+      {tab==="main" && <TabMain data={data} selYear={selYear} prevYear={prevYear} allYears={allYears} mob={mob} lmAll={lmAll} upTo={upTo} isPartial={isPartial} />}
+      {tab==="elec" && <TabElec data={data} selYear={selYear} prevYear={prevYear} mob={mob} lmE={lmE} cliE={cliE} setCliE={setCliE} />}
+      {tab==="gas" && <TabGas data={data} selYear={selYear} prevYear={prevYear} mob={mob} lmG={lmG} cliG={cliG} setCliG={setCliG} />}
+      {tab==="compare" && <TabCompare data={data} allYears={allYears} mob={mob} />}
+      {tab==="entry" && <TabEntry stored={stored} setStored={setStored} mob={mob} />}
+    </div>
+  );
+}
+    <div style={{ fontFamily:"var(--font-sans)", maxWidth:980, margin:"0 auto", padding:mob?"0.75rem 0.75rem 3rem":"1rem 1rem 3rem" }}>
+      <div style={{ marginBottom:"1rem", display:"flex", alignItems:"flex-start", justifyContent:"space-between", flexDirection:mob?"column":"row", gap:8 }}>
+        <div>
+          <div style={{ fontSize:10, color:"var(--color-text-tertiary)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:3 }}>행복한교회 에너지 관리시스템</div>
+          <h1 style={{ fontSize:m
