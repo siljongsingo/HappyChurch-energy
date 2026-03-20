@@ -547,6 +547,9 @@ function TabCompare({ data, allYears, mob }) {
 }
 
 function TabEntry({ stored, setStored, mob }) {
+  const [unlocked, setUnlocked] = useState(false);
+  const [pwInput, setPwInput] = useState("");
+  const [pwError, setPwError] = useState(false);
   const [eYear, setEYear] = useState("2026");
   const [eMonth, setEMonth] = useState("03");
   const [form, setForm] = useState({});
@@ -598,6 +601,11 @@ function TabEntry({ stored, setStored, mob }) {
     setTimeout(() => setSaved({}), 2000);
   }, [form, applyAndSave]);
 
+  const handleUnlock = () => {
+    if (pwInput === "3059") { setUnlocked(true); setPwError(false); }
+    else { setPwError(true); setPwInput(""); }
+  };
+
   const eAccs = [
     { id:"e1", label:"기본전기", sub:"01-0072-8018", color:"#378ADD", bg:"#EBF3FC", bd:"#378ADD" },
     { id:"e2", label:"4,5층 냉난방", sub:"01-6224-6486 (2025.10~)", color:"#5D96CC", bg:"#E6F1FB", bd:"#5D96CC" },
@@ -606,6 +614,25 @@ function TabEntry({ stored, setStored, mob }) {
     { id:"gas1", label:"5층주방", sub:"6000905480", color:"#1D9E75", bg:"#E1F5EE", bd:"#1D9E75" },
     { id:"gas2", label:"옥상냉난방", sub:"6000909299", color:"#0F6E56", bg:"#D8F2E8", bd:"#0F6E56" },
   ];
+
+  if (!unlocked) {
+    return (
+      <div style={{ display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"3rem 1rem", gap:16 }}>
+        <div style={{ width:56, height:56, borderRadius:16, background:"#EDEAFC", display:"flex", alignItems:"center", justifyContent:"center", fontSize:28 }}>🔒</div>
+        <div style={{ fontSize:15, fontWeight:600, color:"var(--color-text-primary)" }}>데이터 입력 잠금</div>
+        <div style={{ fontSize:12, color:"var(--color-text-secondary)" }}>비밀번호를 입력하세요</div>
+        <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:8, width:"100%", maxWidth:260 }}>
+          <input type="password" placeholder="비밀번호 입력" value={pwInput}
+            onChange={e => { setPwInput(e.target.value); setPwError(false); }}
+            onKeyDown={e => { if (e.key === "Enter") handleUnlock(); }}
+            style={{ width:"100%", padding:"10px 14px", fontSize:15, borderRadius:8, border: pwError ? "1.5px solid #E24B4A" : "1.5px solid var(--color-border-secondary)", background:"var(--color-background-secondary)", color:"var(--color-text-primary)", textAlign:"center", letterSpacing:"0.3em", boxSizing:"border-box" }}
+            autoFocus />
+          {pwError && <div style={{ fontSize:12, color:"#E24B4A", fontWeight:500 }}>비밀번호가 올바르지 않습니다</div>}
+          <button onClick={handleUnlock} style={{ width:"100%", padding:"10px 0", fontSize:13, fontWeight:600, borderRadius:8, border:"none", background:"#534AB7", color:"#fff", cursor:"pointer" }}>확인</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
