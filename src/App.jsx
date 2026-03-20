@@ -17,7 +17,7 @@ const SKEY = "church_energy_v11";
 const YCOL = { "2023":"#378ADD","2024":"#1D9E75","2025":"#E24B4A","2026":"#BA7517","2027":"#7F77DD" };
 
 // ★ Google Apps Script URL
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzlTnzT7UEtPe8Wg3-9tzCqAh6yGqtXEBmiNIqBf4ysOnm-YTja6L7A4cx3tpG9WS-E/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzY0CeMquiKZ3uF9qfvL188fMmrE61vA-P-Ke29z2w3uEoVEZMGv8ek07gQtVaB9Fix/exec";
 
 const SHEET_CONFIG = [
   { name: "기본전기",      fields: ["e1_usage","e1_cost"] },
